@@ -1,0 +1,27 @@
+<clr-datagrid [clrDgLoading]="loading">
+  <clr-dg-column> File Name</clr-dg-column>
+  <clr-dg-column>Size in MB</clr-dg-column>
+
+  <clr-dg-placeholder> No Log Files Found</clr-dg-placeholder>
+  <clr-dg-row *ngFor="let file of reducedBundleFiles">
+    <clr-dg-cell>{{file.filename}}</clr-dg-cell>
+    <clr-dg-cell>{{file.filesize}}</clr-dg-cell>
+  </clr-dg-row>
+</clr-datagrid>
+
+<h5> Total Bundle Size : <span style="font-weight: bold">{{ totalBundleSize }} </span></h5>
+
+<button class="btn btn-primary btn-sm right" style="display: inline-block" id="collect-bundle-details-btn"
+        (click)="uploadReducedServiceBundle()" [disabled]="startBundleUpload || loading">
+  UPLOAD BUNDLE
+</button>
+<div class="alert alert-success" role="alert" *ngIf="smartBundleDetails != null">
+  <div class="alert-items">
+    <div class="alert-item static">
+      <div class="alert-icon-wrapper">
+        <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+      </div>
+      <span class="alert-text"> Smart Service Bundle Ready to Upload : {{ smartBundleDetails.outputFileLocation }}</span>
+    </div>
+  </div>
+</div>

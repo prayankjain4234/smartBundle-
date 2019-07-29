@@ -1,0 +1,15 @@
+<div *ngIf="bundleFiles != null && bundleFiles!= undefined">
+  <clr-datagrid>
+    <clr-dg-column clrDgField="name"> File Name</clr-dg-column>
+    <clr-dg-column  clrDgField="size">Size in MB</clr-dg-column>
+
+    <clr-dg-placeholder> No Log Files Found</clr-dg-placeholder>
+    <clr-dg-row *clrDgItems="let file of bundleFiles" [clrDgItem]="file">
+      <clr-dg-cell>{{file.filename}}</clr-dg-cell>
+      <clr-dg-cell>{{file.filesize}}</clr-dg-cell>
+    </clr-dg-row>
+  </clr-datagrid>
+
+  <h5> Total Bundle Size : <span style="font-weight: bold">{{ totalBundleSize }} MB</span></h5>
+</div>
+<p>hello</p>

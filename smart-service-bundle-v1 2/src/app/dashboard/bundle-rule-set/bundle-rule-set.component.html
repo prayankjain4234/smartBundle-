@@ -1,0 +1,27 @@
+<h4>
+  configurationIdentifiers
+</h4>
+<textarea clrTextarea [(ngModel)]="description" name="description" required></textarea>
+
+<h4 class="rule-set-heading"> Select the Rules to Apply</h4>
+<div *ngIf="ruleSet?.length > 0">
+<clr-checkbox-wrapper *ngFor="let rule of ruleSet">
+  <input type="checkbox" clrCheckbox [(ngModel)]="rule.hasToBeApplied" />
+  <label class="rule-set-labels"> {{ rule.ruleName }}</label>
+</clr-checkbox-wrapper>
+</div>
+<button class="btn btn-primary btn-sm" style="display: inline-block" id="prune-bundle"
+        (click)="pruneBundle()">
+  PRUNE BUNDLE</button>
+
+<div class="alert alert-success" role="alert" *ngIf="pruneSuccess">
+  <div class="alert-items">
+    <div class="alert-item static">
+      <div class="alert-icon-wrapper">
+        <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+      </div>
+      <span class="alert-text">Successfully pruned the bundle. Proceed ahead to view files in the bundle.</span>
+    </div>
+  </div>
+</div>
+

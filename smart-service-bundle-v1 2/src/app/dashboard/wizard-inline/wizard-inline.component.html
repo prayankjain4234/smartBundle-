@@ -1,0 +1,42 @@
+<clr-wizard #wizard
+            [(clrWizardOpen)]="open"
+            [clrWizardSize]="'lg'"
+            [clrWizardPreventModalAnimation]="true"
+            class="clr-wizard--inline clr-wizard--no-shadow clr-wizard--no-title"
+            style="height: 500px">
+
+  <clr-wizard-title>Smart Service Bundle Creation</clr-wizard-title>
+
+  <!--<clr-wizard-button [type]="'cancel'">Cancel</clr-wizard-button>-->
+  <!--<clr-wizard-button [type]="'previous'">Back</clr-wizard-button>-->
+  <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
+  <clr-wizard-button [type]="'finish'" (click)="preventClosure()">End</clr-wizard-button>
+
+  <clr-wizard-page>
+    <ng-template clrPageTitle> Define Bundle</ng-template> <!-- optional -->
+      <app-bundle-defination (bundleFilesReceived)="loadedBundleFiles($event)"></app-bundle-defination>
+  </clr-wizard-page>
+
+  <clr-wizard-page>
+    <ng-template clrPageTitle> Bundle Details </ng-template> <!-- mandatory -->
+    <app-bundle-details [bundleFiles]="bundleFiles"></app-bundle-details>
+  </clr-wizard-page>
+
+  <clr-wizard-page>
+    <ng-template clrPageTitle> Rule Set</ng-template> <!-- mandatory -->
+
+    <app-bundle-rule-set (reducedBundleSend)="loadedReducedBundleFiles($event)"></app-bundle-rule-set>
+  </clr-wizard-page>
+  <clr-wizard-page>
+    <ng-template clrPageTitle> Optimized Bundle Details </ng-template> <!-- mandatory -->
+    <app-bundle-reduced [reducedBundleFiles]="reducedBundleFiles"></app-bundle-reduced>
+  </clr-wizard-page>
+  <clr-wizard-page>
+    <ng-template clrPageTitle> Original Bundle Vs Smart Service Bundle </ng-template> <!-- mandatory -->
+    Bar Charts:  Show difference in terms of total size
+    Bar Charts:  Show difference in terms of number of lines
+    Show the inferred errors
+    Show the - lines reduced using filterating normalization and inferencing.
+    <app-bundle-comparison></app-bundle-comparison>
+  </clr-wizard-page>
+</clr-wizard>

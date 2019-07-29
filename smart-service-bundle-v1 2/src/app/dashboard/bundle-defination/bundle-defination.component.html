@@ -1,0 +1,29 @@
+<h4> Define Bundle Information</h4>
+<form clrForm>
+  <clr-select-container>
+    <label class="labels-bundle">Select Product: </label>
+    <select clrSelect name="options" [(ngModel)]="selectedProduct">
+      <option *ngFor="let product of listOfProducts;" value="product">{{product}}</option>
+    </select>
+  </clr-select-container>
+  <clr-input-container>
+    <label class="labels-bundle"> Logs Folder Location</label>
+    <input clrInput type="text" [(ngModel)]="logLocation" name="logLocation" required>
+  </clr-input-container>
+
+  <div>
+    <button type="submit" class="btn btn-primary btn-sm" style="display: inline-block" id="collect-bundle-details-btn"
+            (click)="getBundleFiles()" [disabled]="!collectedBundle">
+      COLLECT BUNDLE DETAILS</button>
+    <div class="alert alert-success" role="alert" *ngIf="successFullyDownloadedBundle">
+      <div class="alert-items">
+        <div class="alert-item static">
+          <div class="alert-icon-wrapper">
+            <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+          </div>
+          <span class="alert-text">Bundle details successfully fetched. Proceed ahead to view files in the bundle.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
