@@ -2,40 +2,18 @@ from flask import Flask, request,Response,json
 from flask_cors import CORS, cross_origin
 from flask_restful import Resource, Api
 from json import dumps
-from flask_jsonpify import jsonify
 import os
 import zipfile
 import glob
 from flask import send_file
-import psycopg2
 from humanize import naturalsize
 from data_class import FileDeatils
 from location import locationset
 import zipfile
+from smart_bundle import SmartBundle
+from smart_bundle import SmartBundle
 
-con = psycopg2.connect(
-            database="db",
-            user = "postgres",
-            password = "postgres")
-cur = con.cursor()
-
-cur.execute("select id, name from car")
-
-rows = cur.fetchall()
-
-for r in rows:
-    print (f"id {r[0]} name {r[1]}")
-
-#commit the transcation 
-con.commit()
-
-#close the cursor
-cur.close()
-
-#close the connection
-con.close()
-
-
+s = SmartBundle()
 app = Flask(__name__)
 api = Api(app)
 filenamedownload=''
@@ -48,6 +26,9 @@ def rules():
     RULE_2=request.json['RULE_2']
     RULE_3=request.json['RULE_3']
     #call function to send the set of rules call
+    output = s.get_smart_bundle(location=location, request1=RULE_1, request2=RULE_2, request3=RULE_3)
+    print("this is the output of")
+    print(output)
     resp = Response(status=200, mimetype='application/json')
     return  resp
 
@@ -56,6 +37,7 @@ def getfile():
     product=request.args['product']
     global location
     location=request.args['location']
+    print (location)
     locationset(location)
     fileDeatilslist=[]
     fileDeatilslist=getfiles(location)
@@ -72,6 +54,13 @@ def getOptimize():
     jsonData = json.dumps(fileDeatilslist, default = lambda x: x.__dict__)
     resp = Response(jsonData, status=200, mimetype='application/json')
     return  resp
+
+@app.route('/sendjson')
+def getjson():
+    path = location + "/smartServiceBundle"
+    dat = s.sendjson(path)
+    print(dat)
+    return dat
 
 @app.route('/zipSmartBundle', methods=["POST"])
 def ziplocation():
