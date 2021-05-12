@@ -23,7 +23,7 @@
     "@clr/icons": "^2.1.0",
     "@clr/ui": "^2.1.0",
     "@webcomponents/custom-elements": "^1.0.0",
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "ng2-charts": "^2.3.0",
     "rxjs": "~6.4.0",
     "rxjs-compat": "^6.5.2",
